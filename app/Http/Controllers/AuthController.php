@@ -12,22 +12,25 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $credentials = $request->only(['correo', 'contrasena']);
-
+    
         $usuario = Usuario::where('correo', $credentials['correo'])->first();
-
+    
         if ($usuario && $credentials['contrasena'] == $usuario->contrasena) {
-            $habitacionId = $usuario->habitacion_id;
-
-            // Utilizar el método find para obtener la habitación por su ID
-            $habitacion = Habitacion::find($habitacionId);
-
-            if ($habitacion) {
-                return response()->json(['success' => true, 'habitacion' => $habitacion], 200);
+    
+            // habitaciones del usuario
+            $habitaciones = Habitacion::where('id', $usuario->id)->get(['id']);
+    
+            if ($habitaciones->isNotEmpty()) {
+                // Mapea las habitaciones para obtener solo el campo 'id'
+                $habitacionesIds = $habitaciones->pluck('id')->toArray();
+    
+                return response()->json(['Habitaciones' => $habitacionesIds]);
             } else {
-                return response()->json(['success' => false, 'message' => 'Habitación no encontrada'], 404);
+                return response()->json(['success' => false, 'message' => 'El usuario no tiene habitaciones asignadas'], 404);
             }
         }
-
+    
         return response()->json(['success' => false, 'message' => 'Credenciales inválidas'], 401);
     }
+    
 }
