@@ -10,6 +10,7 @@ return new class extends Migration
     {
         Schema::create('habitaciones', function (Blueprint $table) {
             $table->id();
+            $table->string('nombre');
             $table->boolean('sensor_magnetico')->default(false);
             $table->boolean('movimiento')->default(false);
             $table->float('temperatura')->nullable();

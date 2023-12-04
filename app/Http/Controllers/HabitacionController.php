@@ -10,7 +10,7 @@ class HabitacionController extends Controller
 {
     public function index()
 {
-    $habitaciones = Habitacion::all(['id'])->toArray();
+    $habitaciones = Habitacion::all(['id','nombre'])->toArray();
 
     return response()->json(['Habitaciones' => $habitaciones], 200);
 }

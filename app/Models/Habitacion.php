@@ -9,7 +9,7 @@ class Habitacion extends Model
 {
     use HasFactory;
     protected $table = 'habitaciones';
-    protected $fillable = ['sensor_magnetico', 'movimiento', 'temperatura', 'humedad', 'luz', 'voltaje'];
+    protected $fillable = ['nombre','sensor_magnetico', 'movimiento', 'temperatura', 'humedad', 'luz', 'voltaje'];
 
     public function usuarios()
     {
